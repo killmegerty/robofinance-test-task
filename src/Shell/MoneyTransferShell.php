@@ -53,7 +53,6 @@ EOT;
             return;
         }
 
-
         $conn = ConnectionManager::get('default');
         // transaction
         try {

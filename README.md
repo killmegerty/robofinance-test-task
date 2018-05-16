@@ -26,25 +26,35 @@ bin/cake migrations seed
 # Комментарии по проекту
 Из .gitignore config/app.php я убрал, он есть в проекте. Сделал специально, чтобы ускорить настройку окружения, там уже прописаны доступы к БД.
 
-# Комментарии к тестированию
+# Комментарии к тестированию \ Ответы
 
-Задание 1
-- 1)
-```sh
+##### Задание 1
+###### 1)
+```sql
 SELECT DISTINCT application.*, IF(credit.client_id IS NOT NULL, false, true) AS 'new_client'
 FROM application
 LEFT JOIN credit ON application.client_id = credit.client_id
 ORDER BY application.id
 ```
-- 2) Тут не уточнено , но скорее всего под "ID предыдущего кредита" подразумевается "ID предыдущего кредита клиента"
-```sh
+###### 2) Тут не уточнено , но скорее всего, под "ID предыдущего кредита" подразумевается "ID предыдущего кредита клиента"
+```sql
 SELECT *, (
     SELECT id
     FROM credit prev_credit
-    WHERE prev_credit.client_id = cur_credit.client_id and prev_credit.id < cur_credit.id
+    WHERE prev_credit.client_id = cur_credit.client_id AND prev_credit.id < cur_credit.id
     ORDER BY id DESC
     LIMIT 1
 ) AS 'previous_credit_id'
 FROM credit cur_credit
 ORDER BY cur_credit.id
 ```
+
+##### Задание 2
+Из корня проекта
+```sh
+bin/cake money_transfer  // помощь
+bin/cake money_transfer 1 2 100  // пример использования
+```
+`Первый аргумент` - id пользователя из таблицы users. Отправитель. При успешной транзакции поле wallet_amount измениться на wallet_amount-amount (amount -`третий аргумент`)
+`Второй аргумент` - id пользователя из таблицы users. Получатель. При успешной транзакции поле wallet_amount измениться на wallet_amount+amount (amount - `третий аргумент`)
+`Третий аргумент` - сумма перевода
