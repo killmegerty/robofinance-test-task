@@ -26,7 +26,8 @@ class MoneyTransferShell extends Shell
         return $parser;
     }
 
-    private function __help() {
+    private function __help()
+    {
         $msg = <<<EOT
     Usage: cake money_transfer <From_User_ID> <To_User_ID> <Amount>
 
@@ -37,7 +38,8 @@ EOT;
         return $msg;
     }
 
-    public function help() {
+    public function help()
+    {
         $this->out($this->__help());
     }
 
